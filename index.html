@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>niea.me</title>
+  <link rel="icon" href="/static/img/icon.png">
+  <link rel="stylesheet" type="text/css" href="/static/css/master.css">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <ul>
+      <li>
+        <a href="/"><img src="/static/img/icon.png" alt="niea logo"></a>
+      </li>
+      <li>
+        <sep>
+      </li>
+      <li>
+        <a href="/login.php" id="login" class="button"><h1>LOGIN</h1></a>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1>bruh</h1>
+    <p>test xd 123123123123!!$$ <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd
+      <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd <br> asd
+      <br> asd <br> asd</p>
+  </main>
+  <script>
+    let title = 'niea.me';
+    let i = 7;
+    setInterval(() => {
+      document.title = title.substring(0, i + 1);
+      if (i == 0) {
+        direction = 1;
+      } else if (i == title.length) {
+        direction = -1;
+      }
+      i += direction;
+    }, 300);
+  </script>
+</body>
+
+</html>
