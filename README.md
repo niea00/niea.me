@@ -1,2 +1,0 @@
-# niea.me
-site
