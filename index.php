@@ -1,7 +1,7 @@
 <?php
 
 $live = false;
-$ChannelID = 'UCYUbNjkuE4lsr2v1Id2O1oA'; //live test 
+$ChannelID = 'UCSJ4gkVC6NrvII8umztf0Ow'; //live test 
 //$ChannelID = 'UCKe5uOUpa3N31HcOD-ZcXrg'; //non-live test
 
 $pagecontent = file_get_contents("https://youtube.com/channel/".$ChannelID);
@@ -30,13 +30,14 @@ $livetitle= "0";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nieaHax</title>
-    <link rel="stylesheet" href="https://raw.githubusercontent.com/necolas/normalize.css/master/normalize.css">
     <link rel="stylesheet" type="text/css" href="jqui.css"/>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
+    <preload><h1>niea<span>Hax</span></h1><br/><img src="load.gif"></preload>
     <taskbar>
         <a href="#">
         <tag>niea<span>Hax</span></tag>

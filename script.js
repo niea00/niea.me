@@ -1,4 +1,5 @@
 let globalZ = 10;
+ws = window.localStorage;
 
 $('icon').dblclick((e) => {
     openWindow(e.currentTarget.id);
@@ -27,6 +28,41 @@ $('close').click(() => {
     })
 })
 
+$('icon').draggable({
+    containment: "dwm",
+    stop: function(e, ui){
+
+        ws.setItem(ui.helper.prevObject[0].id + ".icon.x", ui.helper.position().left)
+        ws.setItem(ui.helper.prevObject[0].id + ".icon.y", ui.helper.position().top)
+        console.log($('icon#' + ui.helper.prevObject[0].id));
+        updateIconPos(ui.helper.prevObject[0].id);
+    },
+    opacity: 0.7, helper: "clone",
+    grid: [ 76, 80 ]
+})
+.css(
+    
+        'left', 
+        function() {
+            if(!ws.getItem($(this).attr('id') + ".icon.x")){
+                ws.setItem($(this).attr('id') + ".icon.x", $(this).position().left);
+            }
+            updateIconPos($(this).attr('id'));
+            return ws.getItem($(this).attr('id') + ".icon.x");
+        }
+)
+.css(
+    
+        'top', 
+        function() {
+            if(!ws.getItem($(this).attr('id') + ".icon.y")){
+                ws.setItem($(this).attr('id') + ".icon.y", $(this).position().top);
+            }
+            return ws.getItem($(this).attr('id') + ".icon.y");
+        }
+)
+
+
 $('live').click(() => {
     if($('live').hasClass('islive')){
         $('popup')
@@ -52,7 +88,6 @@ $('titlebar name').css(
 
 startTime();
 
-ws = window.localStorage;
 
 function startTime() {
     var today = new Date();
@@ -103,3 +138,17 @@ function updateWindowPos(id){
     ws.setItem(id+'.w', $("window#" + id).css('width'));
     ws.setItem(id+'.h', $("window#" + id).css('height'));
 }
+
+function updateIconPos(id){
+    $('icon#' + id).css('position', 'absolute');
+    $('icon#' + id).animate({
+        'left': ws.getItem(id + ".icon.x") + 'px',
+        'top': ws.getItem(id + ".icon.y") + 'px'
+    }, 200)
+}
+
+$(document).ready(() => {
+    setTimeout(() => {
+       $('preload').fadeOut(200);
+    }, 200)
+})
