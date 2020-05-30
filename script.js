@@ -34,7 +34,6 @@ $('icon').draggable({
 
         ws.setItem(ui.helper.prevObject[0].id + ".icon.x", ui.helper.position().left)
         ws.setItem(ui.helper.prevObject[0].id + ".icon.y", ui.helper.position().top)
-        console.log($('icon#' + ui.helper.prevObject[0].id));
         updateIconPos(ui.helper.prevObject[0].id);
     },
     opacity: 0.7, helper: "clone",
@@ -46,6 +45,7 @@ $('icon').draggable({
         function() {
             if(!ws.getItem($(this).attr('id') + ".icon.x")){
                 ws.setItem($(this).attr('id') + ".icon.x", $(this).position().left);
+                return $(this).position().left + "px";
             }
             updateIconPos($(this).attr('id'));
             return ws.getItem($(this).attr('id') + ".icon.x");
@@ -57,6 +57,7 @@ $('icon').draggable({
         function() {
             if(!ws.getItem($(this).attr('id') + ".icon.y")){
                 ws.setItem($(this).attr('id') + ".icon.y", $(this).position().top);
+                return $(this).position().left + "px";
             }
             return ws.getItem($(this).attr('id') + ".icon.y");
         }
