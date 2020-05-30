@@ -10,12 +10,7 @@ $('window').draggable({
     stop: function(e, ui){
         updateWindowPos(ui.helper[0].id);
     }
-}).resizable({
-    containment: "content",
-    stop: function(e, ui){
-        updateWindowPos(ui.helper[0].id);
-    }
-});
+})
 
 $('window').mousedown((e) => {
     $('window').removeClass("focus");
@@ -33,7 +28,9 @@ $('close').click(() => {
 })
 
 $('live').click(() => {
-    $('popup').fadeIn(100);
+    $('popup')
+    .css('z-index', globalZ++)
+    .fadeIn(100);
 })
 
 $('closebutton').click((e) => {
@@ -50,8 +47,6 @@ $('titlebar name').css(
         return 'url(' + $('icon#' + $(this).parent().parent().attr('id') + ' img').attr('src') + ')'
     } 
 )
-
-console.log($('titlebar name'))
 
 startTime();
 
@@ -89,6 +84,15 @@ function openWindow(id){
         .addClass("focus")
         .css({'z-index': globalZ++})
     }
+    
+    $('window#' + id).resizable({
+        containment: "content",
+        minHeight: $('window#' + id).data('minh'),
+        minWidth: $('window#' + id).data('minw') ,
+        stop: function(e, ui){
+            updateWindowPos(ui.helper[0].id);
+        }
+    });
 }
 
 function updateWindowPos(id){
