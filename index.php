@@ -42,16 +42,20 @@ $livetitle= "0";
         <a href="#">
         <tag>niea<span>Hax</span></tag>
         </a>
-            <live <?php if($live){echo 'class="islive"';}?>>LIVE</live>
-            <popup <?php if(!$live){echo 'style="display: none;"';}?>>
-                <close></close>
-                niea is currently live on YouTube!
-                <a href="<?php echo $liveurl; ?>">
+
+        <taskbarcontainer>
+        </taskbarcontainer>
+
+        <clock>00:00:00</clock>
+        <live <?php if($live){echo 'class="islive"';}?>>LIVE</live>
+        <popup <?php if(!$live){echo 'style="display: none;"';}?>>
+            <close></close>
+            niea is currently live on YouTube!
+            <a href="<?php echo $liveurl; ?>">
                 <img src="<?php echo $livethumb; ?>">
                 <livetitle><?php echo $livetitle;?></livetitle>
-                </a>
-            </popup>
-        <clock>00:00:00</clock>
+            </a>
+        </popup>
     </taskbar>
     <content>
         <dwm>

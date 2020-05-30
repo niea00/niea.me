@@ -14,10 +14,7 @@ $('window').draggable({
 })
 
 $('window').mousedown((e) => {
-    $('window').removeClass("focus");
-    $('window#' + e.currentTarget.id)
-    .css({'z-index': globalZ++})
-    .addClass("focus")
+    focusWindow(e.currentTarget.id)
 });
 
 $('close').click(() => {
@@ -74,10 +71,12 @@ $('live').click(() => {
 
 $('closebutton').click((e) => {
     $('window#' + e.currentTarget.parentNode.parentNode.id).hide();
+    $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).remove();
 });
 
 $('dwm').mousedown(() => {
     $('window').removeClass("focus");
+    $('taskbaritem').removeClass('focus');
 });
 
 $('titlebar name').css(
@@ -107,21 +106,34 @@ function checkTime(i) {
 }
 
 function openWindow(id){
+
+    if($('window#' + id).css('display') == "none"){
+        console.log(id);
+        $('taskbarcontainer').append('<taskbaritem id="' + id + '"><name>' + $('window#' + id + " titlebar name").text() + '</name></taskbaritem>')
+        $('taskbaritem#' + id).click(() => {
+            focusWindow(id);
+        }).css(
+            'background-image',
+            
+            function() {
+                return 'url(' + $('icon#' + id + ' img').attr('src') + ')'
+            } 
+        )
+    }
     if(ws.getItem(id + '.x')){
         $('window#' + id)       
         .css({'width': ws.getItem(id + ".w"), 'height': ws.getItem(id + ".h")})
         .css({'top': ws.getItem(id + ".y"), 'left': ws.getItem(id + ".x")})
         .css({'display': 'initial'})
-        .addClass("focus")
         .css({'z-index': globalZ++})
     } else {
         $('window#' + id)
         .css({'width': $('window#' + id).data('minw') + "px", 'height': $('window#' + id).data('minh') + "px"})
         .css({'top': ($('dwm').height()/2)-($('window#' + id).data('minh')/2), 'left': ($('dwm').width()/2)-($('window#' + id).data('minw')/2)})
         .css({'display': 'initial'})
-        .addClass("focus")
         .css({'z-index': globalZ++})
     }
+    focusWindow(id);
 
     $('window#' + id).resizable({
         containment: "content",
@@ -153,3 +165,12 @@ $(document).ready(() => {
        $('preload').fadeOut(200);
     }, 200)
 })
+
+function focusWindow(id){
+    $('window').removeClass('focus')
+    $('taskbaritem').removeClass('focus');
+    $('taskbaritem#' + id).addClass('focus');
+    $('window#' + id)
+    .addClass("focus")
+    .css({'z-index': globalZ++})
+}

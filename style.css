@@ -170,7 +170,6 @@ live {
     background-color: #222;
     border-top: 1px solid black;
     border-left: 1px solid black;
-    padding-left: 1px;
     height: 10px;
     top: 2px;
     margin-bottom: -1px;
@@ -254,4 +253,46 @@ preload img {
     left: calc(50% - 16px);
     top: calc(50% + 12px + 16px);
     width: 32px;
+}
+
+taskbarcontainer {
+    position: absolute;
+    left: 46px;
+    top: 0;
+    height: 16px;
+    right: 70px;
+}
+
+taskbaritem {
+    float: left;
+    height: 12px;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    margin-top: 1px;
+    margin-right: 2px;
+    padding-left: 12px;
+    padding-right: 2px;
+    background-color: #444;
+    cursor: pointer;
+    background-image: url(https://cdn.freebiesupply.com/images/large/2x/steam-logo-transparent.png);
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: 1px;
+    transition: ease-in-out 100ms;
+}
+
+taskbaritem:hover {
+    background-color: #555;
+    transition: ease-in-out 100ms;
+}
+
+taskbaritem.focus {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    background-color: #555;
 }
