@@ -59,7 +59,7 @@ $livetitle= "0";
                 <name>Steam</name>
             </icon>
             <icon id="file">
-                <img src="https://apprecs.org/gp/images/app-icons/300/c4/com.lenovo.FileBrowser2.jpg">
+                <img src="https://cdn.discordapp.com/attachments/650189211273789440/716188468174258176/tumblr_mjok1bhPIB1rfjowdo1_500.gif">
                 <name>File</name>
             </icon>
             <icon id="csgo">
@@ -82,7 +82,7 @@ $livetitle= "0";
                 <closebutton></closebutton>
             </titlebar>
             <wincontent>
-                content file  here :))
+                limbi was here 👌👌
             </wincontent>
         </window>
         <window id="csgo" data-minw="200" data-minh="120">
