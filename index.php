@@ -1,20 +1,26 @@
 <?php
 
 $live = false;
+$ChannelID = 'UCYUbNjkuE4lsr2v1Id2O1oA'; //live test 
+//$ChannelID = 'UCKe5uOUpa3N31HcOD-ZcXrg'; //non-live test
 
-$API_KEY = 'AIzaSyA7ddlax4__lfpWFITD_k1doQgyQNult5A'; 
-$ChannelID = 'UCSJ4gkVC6NrvII8umztf0Ow'; 
-$channelInfo = 'https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='.$ChannelID.'&type=video&eventType=live&key='.$API_KEY; 
-$extractInfo = file_get_contents($channelInfo); 
-$extractInfo = str_replace('},]',"}]",$extractInfo); 
-$showInfo = json_decode($extractInfo, true); 
-$live = $showInfo['pageInfo']['totalResults'] !== 0;
+$pagecontent = file_get_contents("https://youtube.com/channel/".$ChannelID);
 
-if($live){
-$livetitle = $showInfo['items'][0]['snippet']['title'];
-$liveurl = "https://youtube.com/watch?v=".$showInfo['items'][0]['id']['videoId'];
-$livethumb = $showInfo['items'][0]['snippet']['thumbnails']['medium']['url'];
-}
+$live = strpos($pagecontent, '>Live now</span></li></ul></div>') !== false;
+$livethumb = "0";
+$liveurl = "0";
+$livetitle= "0";
+
+@preg_match('/https:\/\/i.ytimg.com\/vi\/...........\/hqdefault_live.jpg/', $pagecontent, $matches, PREG_OFFSET_CAPTURE);
+    @$livethumb = str_split(str_split($pagecontent, $matches[0][1])[1], 53)[0];
+
+    @preg_match('/href=\"\/watch\?v=...........\" rel=\"nofollow\">/', $pagecontent, $matches, PREG_OFFSET_CAPTURE);
+    @$liveurl = "https://youtube.com" . str_split(str_split($pagecontent, $matches[0][1] + 6)[1], 20)[0];
+
+    @preg_match('/ellipsis-2\" dir=\"ltr\" title=\".*\"  data/', $pagecontent, $matches, PREG_OFFSET_CAPTURE);
+    @$tmp = str_split($pagecontent, $matches[0][1] + 29)[1];
+    @preg_match('/\"  data-session/', $tmp, $matches, PREG_OFFSET_CAPTURE);
+    @$livetitle = str_split($tmp, $matches[0][1])[0];
 
 ?>
 

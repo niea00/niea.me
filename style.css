@@ -6,8 +6,8 @@
 }
 
 * {
-    font-family: pix;
-    font-size: 8px;
+    font-family: arial;
+    font-size: 10px;
     color: #eee;
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
@@ -192,12 +192,15 @@ popup {
     width: 200px;
     text-align: center;
     border-top: 6px solid red;
+    padding-bottom: 8px;
 }
 
 popup img {
     width: 198px;
-    margin-top: 5px;
-    margin-bottom: 3px;
+    margin-top: calc(-6%);
+    margin-bottom: calc(-6%);
+    clip-path: polygon(0 12%, 100% 12%, 100% 88%, 0 88%);
+    border: 1px solid black;
 }
 
 close {
@@ -212,6 +215,10 @@ close {
     cursor: pointer;
 }
 
-live {
+live.islive {
     cursor: pointer;
+}
+
+a {
+    text-decoration: none;
 }

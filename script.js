@@ -28,9 +28,11 @@ $('close').click(() => {
 })
 
 $('live').click(() => {
-    $('popup')
-    .css('z-index', globalZ++)
-    .fadeIn(100);
+    if($('live').hasClass('islive')){
+        $('popup')
+        .css('z-index', globalZ++)
+        .fadeIn(100);
+    }
 })
 
 $('closebutton').click((e) => {
@@ -84,7 +86,7 @@ function openWindow(id){
         .addClass("focus")
         .css({'z-index': globalZ++})
     }
-    
+
     $('window#' + id).resizable({
         containment: "content",
         minHeight: $('window#' + id).data('minh'),
