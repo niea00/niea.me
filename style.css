@@ -118,9 +118,7 @@ window.focus titlebar{
 }
 
 closebutton {
-    position: absolute;
-    top: 0;
-    right: 0;
+    float: right;
     width: 24px;
     height: 16px;
     background-image: url("./close.png");
@@ -276,7 +274,6 @@ taskbaritem {
     padding-right: 2px;
     background-color: #444;
     cursor: pointer;
-    background-image: url(https://cdn.freebiesupply.com/images/large/2x/steam-logo-transparent.png);
     background-size: 10px;
     background-repeat: no-repeat;
     background-position-y: center;
@@ -295,4 +292,22 @@ taskbaritem.focus {
     border-bottom: 1px solid gray;
     border-right: 1px solid gray;
     background-color: #555;
+}
+
+icon.ui-draggable-dragging {
+    outline: 1px dotted gray;
+    background-color: #ccc2;
+}
+
+minbutton {
+    background-image: url(min.png);
+    float: right;
+    height: 16px;
+    transition: ease-in-out 200ms;
+    width: 24px;
+}
+
+minbutton:hover {
+    background-color: #7775;
+    transition: ease-in-out 200ms;
 }

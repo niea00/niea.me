@@ -76,6 +76,7 @@ $livetitle= "0";
             <titlebar>
                 <name>Steam</name>
                 <closebutton></closebutton>
+                <minbutton></minbutton>
             </titlebar>
             <wincontent>
                 content here :))
@@ -85,6 +86,7 @@ $livetitle= "0";
             <titlebar>
                 <name>File</name>
                 <closebutton></closebutton>
+                <minbutton></minbutton>
             </titlebar>
             <wincontent>
                 limbi was here 👌👌
@@ -94,6 +96,7 @@ $livetitle= "0";
             <titlebar>
                 <name>CSGO</name>
                 <closebutton></closebutton>
+                <minbutton></minbutton>
             </titlebar>
             <wincontent>
                 content file  here :))

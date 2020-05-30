@@ -19,10 +19,31 @@ $('window').mousedown((e) => {
 
 $('close').click(() => {
     $('popup').animate({
-        right: "-50%"
+        right: "-400px"
     }, 500, () => {
         $('popup').hide().css('right', '4px');
     })
+})
+
+$('minbutton').click((e) => {
+    $('window#' + e.currentTarget.parentNode.parentNode.id)
+    .animate({
+        'top' : '-16px',
+        'left' : $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).position().left,
+        'width' : $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).width(),
+        'height' : $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).height(),
+        'opacity' : '0'
+    }, 200, () => {
+        $(this)
+    
+        .css({
+            'display': 'none'
+        })
+    })
+    setTimeout(() => {
+        $('taskbaritem').removeClass('focus');
+        $('window').removeClass('focus');
+    }, 20);
 })
 
 $('icon').draggable({
@@ -107,19 +128,21 @@ function checkTime(i) {
 
 function openWindow(id){
 
-    if($('window#' + id).css('display') == "none"){
-        console.log(id);
-        $('taskbarcontainer').append('<taskbaritem id="' + id + '"><name>' + $('window#' + id + " titlebar name").text() + '</name></taskbaritem>')
-        $('taskbaritem#' + id).click(() => {
-            focusWindow(id);
-        }).css(
-            'background-image',
-            
-            function() {
-                return 'url(' + $('icon#' + id + ' img').attr('src') + ')'
-            } 
-        )
-    }
+    
+        if($('taskbaritem#' + id).length == 0){
+            console.log($('taskbaritem#' + id));
+            $('taskbarcontainer').append('<taskbaritem id="' + id + '"><name>' + $('window#' + id + " titlebar name").text() + '</name></taskbaritem>')
+            $('taskbaritem#' + id).click(() => {
+                openWindow(id);
+            }).css(
+                'background-image',
+
+                function() {
+                    return 'url(' + $('icon#' + id + ' img').attr('src') + ')'
+                } 
+            )
+        }
+    
     if(ws.getItem(id + '.x')){
         $('window#' + id)       
         .css({'width': ws.getItem(id + ".w"), 'height': ws.getItem(id + ".h")})
@@ -172,5 +195,7 @@ function focusWindow(id){
     $('taskbaritem#' + id).addClass('focus');
     $('window#' + id)
     .addClass("focus")
+    .css('opacity', '1')
+    .css('display', 'initial')
     .css({'z-index': globalZ++})
 }
