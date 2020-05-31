@@ -1,8 +1,7 @@
 <?php
 
 $live = false;
-$ChannelID = 'UCSJ4gkVC6NrvII8umztf0Ow'; //live test 
-//$ChannelID = 'UCKe5uOUpa3N31HcOD-ZcXrg'; //non-live test
+$ChannelID = 'UCMQtFQeykJyG-VTsO_p5dxg'; //live test 
 
 $pagecontent = file_get_contents("https://youtube.com/channel/".$ChannelID);
 
