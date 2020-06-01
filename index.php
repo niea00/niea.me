@@ -62,13 +62,13 @@ $livetitle= "0";
                 <img src="https://cdn.freebiesupply.com/images/large/2x/steam-logo-transparent.png">
                 <name>Steam</name>
             </icon>
-            <icon id="file">
+            <icon id="fun">
                 <img src="https://cdn.discordapp.com/attachments/650189211273789440/716188468174258176/tumblr_mjok1bhPIB1rfjowdo1_500.gif">
-                <name>File</name>
+                <name>Fun stuff</name>
             </icon>
             <icon id="csgo">
                 <img src="https://lookingforclan.com/sites/default/files/styles/icon/public/2018-02/csgo-icon.jpg?itok=QowWchnK">
-                <name>CSGO</name>
+                <name>CSGO Hax</name>
             </icon>
         </dwm>
         <window id="steam" data-minw="200" data-minh="120">
@@ -81,24 +81,70 @@ $livetitle= "0";
                 content here :))
             </wincontent>
         </window>
-        <window id="file" data-minw="200" data-minh="120">
+        <window id="fun" data-minw="200" data-minh="120">
             <titlebar>
-                <name>File</name>
+                <name>Fun stuff</name>
                 <closebutton></closebutton>
                 <minbutton></minbutton>
             </titlebar>
             <wincontent>
-                limbi was here 👌👌
+                <div id="funstuffpreload" class="winpreload">
+                    <p>Connecting...</p>
+                </div>
+                <p style="margin-top: 0;">Clantag: </p>
+                <form id="clantag">
+                    <input type="text" id="clantag" maxlength="15">
+                    <button>Set</button>
+                </form>
+                <p>Chat: </p>
+                <form id="chat">
+                    <input type="text" id="chat" maxlength="126">
+                    <button>Send</button>
+                </form>
+                <p id="funstuffmessage" style="text-align: center;"></p>
             </wincontent>
         </window>
-        <window id="csgo" data-minw="200" data-minh="120">
+        <window id="csgo" data-minw="578" data-minh="120">
             <titlebar>
-                <name>CSGO</name>
+                <name>CSGO Hax</name>
                 <closebutton></closebutton>
                 <minbutton></minbutton>
             </titlebar>
             <wincontent>
-                content file  here :))
+                <div id="csgohaxpreload" class="winpreload">
+                    <p>Connecting...</p>
+                </div>
+                <tabcontainer>
+                    <div class="tab focus" id="aimbot" >Aimbot</div>
+                    <div class="tab" id="antiaim" >Anti-aim</div>
+                    <div class="tab" id="triggerbot" >Triggerbot</div>
+                    <div class="tab" id="backtrack" >Backtrack</div>
+                    <div class="tab" id="glow" >Glow</div>
+                    <div class="tab" id="chams" >Chams</div>
+                    <div class="tab" id="esp" >ESP</div>
+                    <div class="tab" id="visuals" >Visuals</div>
+                    <div class="tab" id="skinchanger" >Skinchanger</div>
+                    <div class="tab" id="sound" >Sound</div>
+                    <div class="tab" id="style" >Style</div>
+                    <div class="tab" id="misc" >Misc</div>
+                    <div class="tab" id="reportbot" >Reportbot</div>
+                    <div class="tab" id="config" >Config</div>
+                </tabcontainer>
+                <tabcontent id="aimbot" class="focus" >aimbot</tabcontent>
+                <tabcontent id="antiaim">antiaim</tabcontent>
+                <tabcontent id="triggerbot">triggerbot</tabcontent>
+                <tabcontent id="backtrack">backtrack</tabcontent>
+                <tabcontent id="glow">glow</tabcontent>
+                <tabcontent id="chams">chams</tabcontent>
+                <tabcontent id="esp">esp</tabcontent>
+                <tabcontent id="visuals">visuals</tabcontent>
+                <tabcontent id="skinchanger">skinchanger</tabcontent>
+                <tabcontent id="sound">sound</tabcontent>
+                <tabcontent id="style">style</tabcontent>
+                <tabcontent id="misc">misc</tabcontent>
+                <tabcontent id="reportbot">
+                </tabcontent>
+                <tabcontent id="config">config</tabcontent>
             </wincontent>
         </window>
     </content>

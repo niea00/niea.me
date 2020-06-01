@@ -25,6 +25,13 @@ $('close').click(() => {
     })
 })
 
+$('div.tab').click((e) => {
+    $('div.tab.focus').removeClass('focus');
+    $('div.tab#' + e.currentTarget.id).addClass('focus');
+    $('tabcontent.focus').removeClass('focus');
+    $('tabcontent#' + e.currentTarget.id).addClass('focus');
+})
+
 $('minbutton').click((e) => {
     $('window#' + e.currentTarget.parentNode.parentNode.id)
     .animate({
@@ -92,6 +99,12 @@ $('live').click(() => {
 
 $('closebutton').click((e) => {
     $('window#' + e.currentTarget.parentNode.parentNode.id).hide();
+    if(e.currentTarget.parentNode.parentNode.id == "csgo"){
+        $('#csgohaxpreload').show();
+    }
+    if(e.currentTarget.parentNode.parentNode.id == "fun"){
+        $('#funstuffpreload').show();
+    }
     $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).remove();
 });
 
@@ -99,6 +112,38 @@ $('dwm').mousedown(() => {
     $('window').removeClass("focus");
     $('taskbaritem').removeClass('focus');
 });
+
+$('form').submit((event) => {
+    event.preventDefault();
+    $.ajax({
+        url: "http://nieahax.pagekite.me/api?" + event.currentTarget.id + "=" + $('input#' + event.currentTarget.id)[0].value,
+        success: function(message){
+            if(event.currentTarget.id == "clantag"){
+                $("p#funstuffmessage").removeClass('fail');
+                $("p#funstuffmessage").addClass('success');
+                $("p#funstuffmessage").text(message);
+            }
+            if(event.currentTarget.id == "chat"){
+                $("p#funstuffmessage").removeClass('fail');
+                $("p#funstuffmessage").addClass('success');
+                $("p#funstuffmessage").text(message);
+            }
+        }
+    })
+    .fail((message) => {
+        if(event.currentTarget.id == "clantag"){
+            console.log(message);
+            $("p#funstuffmessage").removeClass('success');
+            $("p#funstuffmessage").addClass('fail');
+            $("p#funstuffmessage").text("(" + message.status + ") " + message.statusText);
+        }
+        if(event.currentTarget.id == "chat"){
+            $("p#funstuffmessage").removeClass('success');
+            $("p#funstuffmessage").addClass('fail');
+            $("p#funstuffmessage").text("(" + message.status + ") " + message.statusText);
+        }
+    })
+})
 
 $('titlebar name').css(
     'background-image',
@@ -128,6 +173,49 @@ function checkTime(i) {
 
 function openWindow(id){
 
+
+    if(id == "csgo")
+    {
+        $('#csgohaxpreload p').text("Connecting...");
+        $.ajax({
+            type: "get",
+            timeout: 5000,
+            url: "http://nieahax.pagekite.me/hi",
+            success: function (response) {
+                if(response == "ok"){
+                    $('#csgohaxpreload p').delay(200).text("Retrieving config...");
+                    $.ajax({
+                        url: "http://nieahax.pagekite.me/cfg",
+                        dataType:'text',
+                        success: function(data) {
+                            $('#csgohaxpreload').delay(200).fadeOut(200);
+                        }
+                    })
+                }
+            }
+        })
+        .fail(function(msg){
+            $('#csgohaxpreload p').text("Connection failed!");
+        });
+    }
+
+    if(id == "fun")
+    {
+        $('#funstuffpreload p').text("Connecting...");
+        $.ajax({
+            type: "get",
+            timeout: 5000,
+            url: "http://nieahax.pagekite.me/hi",
+            success: function (response) {
+                if(response == "ok"){
+                    $('#funstuffpreload').delay(200).fadeOut(200);
+                }
+            }
+        })
+        .fail(function(msg){
+            $('#funstuffpreload p').text("Connection failed!");
+        });
+    }
     
         if($('taskbaritem#' + id).length == 0){
             console.log($('taskbaritem#' + id));
