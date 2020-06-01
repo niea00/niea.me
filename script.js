@@ -116,7 +116,7 @@ $('dwm').mousedown(() => {
 $('form').submit((event) => {
     event.preventDefault();
     $.ajax({
-        url: "http://nieahax.pagekite.me/api?" + event.currentTarget.id + "=" + $('input#' + event.currentTarget.id)[0].value,
+        url: "https://nieahax.pagekite.me/api?" + event.currentTarget.id + "=" + $('input#' + event.currentTarget.id)[0].value,
         success: function(message){
             if(event.currentTarget.id == "clantag"){
                 $("p#funstuffmessage").removeClass('fail');
@@ -180,12 +180,12 @@ function openWindow(id){
         $.ajax({
             type: "get",
             timeout: 5000,
-            url: "http://nieahax.pagekite.me/hi",
+            url: "https://nieahax.pagekite.me/hi",
             success: function (response) {
                 if(response == "ok"){
                     $('#csgohaxpreload p').delay(200).text("Retrieving config...");
                     $.ajax({
-                        url: "http://nieahax.pagekite.me/cfg",
+                        url: "https://nieahax.pagekite.me/cfg",
                         dataType:'text',
                         success: function(data) {
                             $('#csgohaxpreload').delay(200).fadeOut(200);
@@ -205,7 +205,7 @@ function openWindow(id){
         $.ajax({
             type: "get",
             timeout: 5000,
-            url: "http://nieahax.pagekite.me/hi",
+            url: "https://nieahax.pagekite.me/hi",
             success: function (response) {
                 if(response == "ok"){
                     $('#funstuffpreload').delay(200).fadeOut(200);
