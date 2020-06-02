@@ -4,7 +4,8 @@ ws = window.localStorage;
 let appsToLoad = [
     "fun",
     "csgo",
-    "steam"
+    "steam",
+    "wallpaper"
 ];
 
 class App {
@@ -159,7 +160,8 @@ $('live').click(() => {
 
 $( "ul#taskbarcontainer" ).sortable({
     revert: true,
-    axis: "x"
+    axis: "x",
+    containment: "#taskbarcontainer"
 });
 
 $('dwm').mousedown(() => {
@@ -186,6 +188,22 @@ function checkTime(i) {
     return i;
 }
 
+function updateWallpaper(){
+    if(ws.getItem("wallpaperurl") != "0"){
+        $('content').css(
+            'background-image',
+            'url(' + ws.getItem("wallpaperurl") + ')'
+        )
+    } else {
+        $('content').css(
+            'background-image',
+            'unset'
+        )
+    }
+}
+
+updateWallpaper();
+
 function openWindow(id){
 
         if($('li.taskbaritem#' + id).length == 0){
@@ -205,8 +223,8 @@ function openWindow(id){
         .css({'z-index': globalZ++})
     } else {
         $('window#' + id)
-        .css({'width': $('window#' + id).data('minw') + "px", 'height': $('window#' + id).data('minh') + "px"})
-        .css({'top': ($('dwm').height()/2)-($('window#' + id).data('minh')/2), 'left': ($('dwm').width()/2)-($('window#' + id).data('minw')/2)})
+        .css({'width': eval(id).minWidth + "px", 'height': eval(id).minHeight + "px"})
+        .css({'top': ($('dwm').height()/2)-(eval(id).minWidth + "px"/2), 'left': ($('dwm').width()/2)-(eval(id).minWidth/2)})
         .css({'display': 'initial'})
         .css({'z-index': globalZ++})
     }
