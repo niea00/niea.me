@@ -162,38 +162,6 @@ $('dwm').mousedown(() => {
     $('taskbaritem').removeClass('focus');
 });
 
-$('form').submit((event) => {
-    event.preventDefault();
-    $.ajax({
-        url: "https://nieahax.pagekite.me/api?" + event.currentTarget.id + "=" + $('input#' + event.currentTarget.id)[0].value,
-        success: function(message){
-            if(event.currentTarget.id == "clantag"){
-                $("p#funstuffmessage").removeClass('fail');
-                $("p#funstuffmessage").addClass('success');
-                $("p#funstuffmessage").text(message);
-            }
-            if(event.currentTarget.id == "chat"){
-                $("p#funstuffmessage").removeClass('fail');
-                $("p#funstuffmessage").addClass('success');
-                $("p#funstuffmessage").text(message);
-            }
-        }
-    })
-    .fail((message) => {
-        if(event.currentTarget.id == "clantag"){
-            console.log(message);
-            $("p#funstuffmessage").removeClass('success');
-            $("p#funstuffmessage").addClass('fail');
-            $("p#funstuffmessage").text("(" + message.status + ") " + message.statusText);
-        }
-        if(event.currentTarget.id == "chat"){
-            $("p#funstuffmessage").removeClass('success');
-            $("p#funstuffmessage").addClass('fail');
-            $("p#funstuffmessage").text("(" + message.status + ") " + message.statusText);
-        }
-    })
-})
-
 startTime();
 
 
