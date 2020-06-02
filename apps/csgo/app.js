@@ -2,7 +2,7 @@ let csgo = new App(
     "csgo",             // id
     "CSGO Cheats",             // name 
     "https://lookingforclan.com/sites/default/files/styles/icon/public/2018-02/csgo-icon.jpg?itok=QowWchnK",             // icon
-    200,            // minWidth
+    570,            // minWidth
     120,            // minHeight
     () => {},       // onLoad
     () => {
