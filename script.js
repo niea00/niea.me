@@ -1,22 +1,138 @@
 let globalZ = 10;
 ws = window.localStorage;
 
-$('icon').dblclick((e) => {
-    openWindow(e.currentTarget.id);
-});
+let appsToLoad = [
+    "fun",
+    "csgo",
+    "steam"
+];
 
-$('window').draggable({
-    containment: "content",
-    handle: "titlebar",
-    stop: function(e, ui){
-        updateWindowPos(ui.helper[0].id);
+class App {
+    constructor(id, name, icon, minWidth = 200, minHeight = 120, onLoad = () => {}, onOpen = () => {}, onClose = () => {}, onMinimize = () => {}, windowContent = ``){
+        this.id = id;
+        this.name = name;
+        this.icon = icon;
+        this.minWidth = minWidth;
+        this.minHeight = minHeight;
+        this.onLoad = onLoad;
+        this.onOpen = onOpen;
+        this.onClose = onClose;
+        this.onMinimize = onMinimize;
+        this.windowContent = windowContent;
+        onLoad();
     }
-})
+}
 
-$('window').mousedown((e) => {
-    focusWindow(e.currentTarget.id)
+appsToLoad.forEach(element => {
+    $.getScript("./apps/" + element + "/app.js", () => {
+        let a = eval(element)
+        $('content dwm').append(
+            '<icon id="' + 
+            a.id + 
+            '"><img src="' + 
+            a.icon +
+            '"><name>' + 
+            a.name +
+            '</name></icon>'
+            )
+        $('icon#' + a.id).dblclick(() => {
+            openWindow(a.id);
+        }).draggable({
+            containment: "dwm",
+            stop: function(e, ui){
+        
+                ws.setItem(ui.helper.prevObject[0].id + ".icon.x", ui.helper.position().left)
+                ws.setItem(ui.helper.prevObject[0].id + ".icon.y", ui.helper.position().top)
+                updateIconPos(ui.helper.prevObject[0].id);
+            },
+            opacity: 0.7, helper: "clone",
+            grid: [ 76, 80 ]
+        })
+        .css(
+            
+                'left', 
+                function() {
+                    if(!ws.getItem($(this).attr('id') + ".icon.x")){
+                        ws.setItem($(this).attr('id') + ".icon.x", $(this).position().left);
+                        return $(this).position().left + "px";
+                    }
+                    updateIconPos($(this).attr('id'));
+                    return ws.getItem($(this).attr('id') + ".icon.x");
+                }
+        )
+        .css(
+            
+                'top', 
+                function() {
+                    if(!ws.getItem($(this).attr('id') + ".icon.y")){
+                        ws.setItem($(this).attr('id') + ".icon.y", $(this).position().top);
+                        return $(this).position().left + "px";
+                    }
+                    return ws.getItem($(this).attr('id') + ".icon.y");
+                }
+        )
+
+        $('content').append(
+            '<window id="' + a.id + `">
+            <titlebar>
+                <name>` + a.name + `</name>
+                <closebutton></closebutton>
+                <minbutton></minbutton>
+            </titlebar>
+            <wincontent>` +
+            a.windowContent + 
+            "</wincontent></window>"
+        );
+        $('content window#' + a.id).draggable({
+            containment: "content",
+            handle: "titlebar",
+            stop: function(e, ui){
+                updateWindowPos(ui.helper[0].id);
+            }
+        }).mousedown(() => {
+            focusWindow(a.id)
+        })
+
+        $('content window#' + a.id + " titlebar minbutton").click((e) => {
+    
+            eval(a.id).onMinimize();
+            $('window#' + a.id)
+            .animate({
+                'top' : '-16px',
+                'left' : $('taskbaritem#' + a.id).position().left,
+                'width' : $('taskbaritem#' + a.id).width(),
+                'height' : $('taskbaritem#' + a.id).height(),
+                'opacity' : '0'
+            }, 200, () => {
+                $(this)
+            
+                .css({
+                    'display': 'none'
+                })
+            })
+            setTimeout(() => {
+                $('taskbaritem').removeClass('focus');
+                $('window').removeClass('focus');
+            }, 20);
+        })
+
+        $('content window#' + a.id + " titlebar closebutton").click(() => {
+            eval(a.id).onClose();
+            $('window#' + a.id).hide();
+            $('taskbaritem#' + a.id).remove();
+        })
+
+        $('content window#' + a.id + " titlebar name").css(
+            "background-image",
+            function() {return "url(" + a.icon + ")"}
+        )
+
+        console.log(element + " loaded.");
+    })
+    .fail((data) => {
+        console.log(element + " failed to load.", data.statusText);
+    })
 });
-
 $('close').click(() => {
     $('popup').animate({
         right: "-400px"
@@ -32,62 +148,6 @@ $('div.tab').click((e) => {
     $('tabcontent#' + e.currentTarget.id).addClass('focus');
 })
 
-$('minbutton').click((e) => {
-    $('window#' + e.currentTarget.parentNode.parentNode.id)
-    .animate({
-        'top' : '-16px',
-        'left' : $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).position().left,
-        'width' : $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).width(),
-        'height' : $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).height(),
-        'opacity' : '0'
-    }, 200, () => {
-        $(this)
-    
-        .css({
-            'display': 'none'
-        })
-    })
-    setTimeout(() => {
-        $('taskbaritem').removeClass('focus');
-        $('window').removeClass('focus');
-    }, 20);
-})
-
-$('icon').draggable({
-    containment: "dwm",
-    stop: function(e, ui){
-
-        ws.setItem(ui.helper.prevObject[0].id + ".icon.x", ui.helper.position().left)
-        ws.setItem(ui.helper.prevObject[0].id + ".icon.y", ui.helper.position().top)
-        updateIconPos(ui.helper.prevObject[0].id);
-    },
-    opacity: 0.7, helper: "clone",
-    grid: [ 76, 80 ]
-})
-.css(
-    
-        'left', 
-        function() {
-            if(!ws.getItem($(this).attr('id') + ".icon.x")){
-                ws.setItem($(this).attr('id') + ".icon.x", $(this).position().left);
-                return $(this).position().left + "px";
-            }
-            updateIconPos($(this).attr('id'));
-            return ws.getItem($(this).attr('id') + ".icon.x");
-        }
-)
-.css(
-    
-        'top', 
-        function() {
-            if(!ws.getItem($(this).attr('id') + ".icon.y")){
-                ws.setItem($(this).attr('id') + ".icon.y", $(this).position().top);
-                return $(this).position().left + "px";
-            }
-            return ws.getItem($(this).attr('id') + ".icon.y");
-        }
-)
-
 
 $('live').click(() => {
     if($('live').hasClass('islive')){
@@ -96,17 +156,6 @@ $('live').click(() => {
         .fadeIn(100);
     }
 })
-
-$('closebutton').click((e) => {
-    $('window#' + e.currentTarget.parentNode.parentNode.id).hide();
-    if(e.currentTarget.parentNode.parentNode.id == "csgo"){
-        $('#csgohaxpreload').show();
-    }
-    if(e.currentTarget.parentNode.parentNode.id == "fun"){
-        $('#funstuffpreload').show();
-    }
-    $('taskbaritem#' + e.currentTarget.parentNode.parentNode.id).remove();
-});
 
 $('dwm').mousedown(() => {
     $('window').removeClass("focus");
@@ -145,13 +194,6 @@ $('form').submit((event) => {
     })
 })
 
-$('titlebar name').css(
-    'background-image',
-    function() {
-        return 'url(' + $('icon#' + $(this).parent().parent().attr('id') + ' img').attr('src') + ')'
-    } 
-)
-
 startTime();
 
 
@@ -173,62 +215,13 @@ function checkTime(i) {
 
 function openWindow(id){
 
-
-    if(id == "csgo")
-    {
-        $('#csgohaxpreload p').text("Connecting...");
-        $.ajax({
-            type: "get",
-            timeout: 5000,
-            url: "https://nieahax.pagekite.me/hi",
-            success: function (response) {
-                if(response == "ok"){
-                    $('#csgohaxpreload p').delay(200).text("Retrieving config...");
-                    $.ajax({
-                        url: "https://nieahax.pagekite.me/cfg",
-                        dataType:'text',
-                        success: function(data) {
-                            $('#csgohaxpreload').delay(200).fadeOut(200);
-                        }
-                    })
-                }
-            }
-        })
-        .fail(function(msg){
-            $('#csgohaxpreload p').text("Connection failed!");
-        });
-    }
-
-    if(id == "fun")
-    {
-        $('#funstuffpreload p').text("Connecting...");
-        $.ajax({
-            type: "get",
-            timeout: 5000,
-            url: "https://nieahax.pagekite.me/hi",
-            success: function (response) {
-                if(response == "ok"){
-                    $('#funstuffpreload').delay(200).fadeOut(200);
-                }
-            }
-        })
-        .fail(function(msg){
-            $('#funstuffpreload p').text("Connection failed!");
-        });
-    }
-    
         if($('taskbaritem#' + id).length == 0){
-            console.log($('taskbaritem#' + id));
-            $('taskbarcontainer').append('<taskbaritem id="' + id + '"><name>' + $('window#' + id + " titlebar name").text() + '</name></taskbaritem>')
+
+            eval(id).onOpen();
+            $('taskbarcontainer').append('<taskbaritem id="' + id + '"><img src="' + $('icon#' + id + ' img').attr('src') + '"><p id="name">' + eval(id).name + '</p></taskbaritem>')
             $('taskbaritem#' + id).click(() => {
                 openWindow(id);
-            }).css(
-                'background-image',
-
-                function() {
-                    return 'url(' + $('icon#' + id + ' img').attr('src') + ')'
-                } 
-            )
+            })
         }
     
     if(ws.getItem(id + '.x')){
@@ -248,13 +241,17 @@ function openWindow(id){
 
     $('window#' + id).resizable({
         containment: "content",
-        minHeight: $('window#' + id).data('minh'),
-        minWidth: $('window#' + id).data('minw') ,
+        minHeight: eval(id).minHeight,
+        minWidth: eval(id).minWidth,
         stop: function(e, ui){
             updateWindowPos(ui.helper[0].id);
         }
     });
 }
+
+$('button#msgok').click(() => {
+    $('bigassmessage').fadeOut(200);
+})
 
 function updateWindowPos(id){
     ws.setItem(id+'.x', $("window#" + id).css('left'));
@@ -269,6 +266,19 @@ function updateIconPos(id){
         'left': ws.getItem(id + ".icon.x") + 'px',
         'top': ws.getItem(id + ".icon.y") + 'px'
     }, 200)
+}
+function doBigAssMessage(title, text, stack){
+    $('bigassmessage h1#msgheader').text(title);
+    $('bigassmessage p#msgtext').text(text);
+    if(stack){
+        console.log(stack);
+        $('div#stack').show();
+        $('pre#msgstack').text(stack);
+    } else {
+        console.log('nope');
+        $('div#stack').hide();
+    }
+    $('bigassmessage').fadeIn(100);
 }
 
 $(document).ready(() => {

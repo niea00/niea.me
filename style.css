@@ -6,7 +6,8 @@
 }
 
 * {
-    font-family: arial;
+    font-family: "segoe ui";
+    line-height: 1.2;
     font-size: 10px;
     color: #eee;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -28,7 +29,7 @@ taskbar {
     top: 0;
     width: 100%;
     height: 16px;
-    background-color: #333;
+    background: linear-gradient(0deg, rgba(51,51,51,1) 0%, rgba(85,85,85,1) 100%);
     box-shadow: 0 2px 0 0 black;
 }
 
@@ -43,14 +44,13 @@ content {
 }
 
 tag {
-    padding: 3px;
-    position: absolute;
-    left: 0;
-    top: -1px;
-    margin-top: 1px;
-    height: 10px;
+    float: left;
+    height: 15px;
+    padding-top: 1px;
+    padding-left: 2px;
+    padding-right: 9px;
     text-shadow: 1px 1px 1px black;
-    border-right: 1px solid #444;
+    background-image: urL("metal.png");
 }
 
 tag span {
@@ -137,19 +137,13 @@ icon:hover {
 }
 
 clock {
-    position: absolute;
-    right: 30px;
-    background-color: #262626;
     margin: 2px;
     color: white;
-    border-bottom: 1px solid #888;
-    border-right: 1px solid #888;
-    border-top: 1px solid #0f0f0f;
-    border-left: 1px solid #0f0f0f;
     padding-left: 1px;
+    float: right;
     height: 10px;
     text-align: right;
-    background-color: #242424;
+    margin-right: 6px;
 }
 
 titlebar name {
@@ -162,21 +156,28 @@ titlebar name {
 }
 
 live {
-    position: absolute;
-    right: 4px;
-    border: 1px solid gray;
     color: gray;
-    background-color: #222;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
     height: 10px;
-    top: 2px;
+    float: right;
+    margin-right: 4px;
+    margin-top: 2px;
     margin-bottom: -1px;
+    text-shadow: 1px 1px 2px black;
+}
+
+live::before{
+    content: "⬤";
+    margin-right: 2px;
 }
 
 live.islive {
-    background-color: red;
     color: white;
+}
+
+live.islive::before {
+    content: "⬤";
+    margin-right: 2px;
+    color: red;
 }
 
 popup {
@@ -256,7 +257,7 @@ preload img {
 
 taskbarcontainer {
     position: absolute;
-    left: 46px;
+    left: 52px;
     top: 0;
     height: 16px;
     right: 70px;
@@ -264,14 +265,10 @@ taskbarcontainer {
 
 taskbaritem {
     float: left;
-    height: 12px;
-    border-top: 1px solid gray;
-    border-left: 1px solid gray;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    margin-top: 1px;
+    height: 15px;
     margin-right: 2px;
-    padding-left: 12px;
+    padding-top: 1px;
+    padding-left: 2px;
     padding-right: 2px;
     background-color: #444;
     cursor: pointer;
@@ -280,19 +277,31 @@ taskbaritem {
     background-position-y: center;
     background-position-x: 1px;
     transition: ease-in-out 100ms;
+    background: linear-gradient(0deg, rgba(51,51,51,1) 0%, rgba(85,85,85,1) 100%);
+    box-shadow: 0 0 1px black;
+}
+
+taskbaritem p#name {
+    float: right;
+    margin: 1px;
 }
 
 taskbaritem:hover {
     background-color: #555;
     transition: ease-in-out 100ms;
+    box-shadow: 0 0 2px black;
+    background: linear-gradient(0deg, rgba(61,61,61,1) 0%, rgba(95,95,95,1) 100%);
 }
 
 taskbaritem.focus {
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid gray;
-    border-right: 1px solid gray;
     background-color: #555;
+    background: linear-gradient(0deg, rgba(68,68,68,1) 0%, rgba(102,102,102,1) 100%);
+    box-shadow: 0 0 4px black;
+}
+
+taskbaritem img {
+    width: 14px;
+    margin-right: 2px;
 }
 
 icon.ui-draggable-dragging {
@@ -410,4 +419,69 @@ p.success {
 
 p.fail {
     color: red;
+}
+
+bigassmessage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999999999999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0007;
+}
+
+msgbox {
+    background-color: #222;
+    max-width: 60rem;
+    min-width: 200px;
+    border-radius: 4px;
+}
+
+
+msgbox h1#msgheader {
+    background-color: #333;
+    margin: 0;
+    padding: 6px;
+    box-shadow: 0 0 2px black;
+    border-radius: 4px 4px 0 0;
+}
+
+msgbox p#msgtext {
+    padding: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-family: "segoe ui light";
+}
+
+msgbox p#msgstacklabel {
+
+    margin: 10px;
+    margin-bottom: 4px;
+}
+
+msgbox pre#msgstack {
+    background-color: #333;
+    padding: 4px;
+    margin: 10px;
+    font-family: monospace;
+    max-height: 140px;
+    overflow-y: scroll;
+    margin-top: 0;
+}
+
+msgbox button#msgok {
+    float: right;
+    margin-right: 6px;
+    margin-bottom: 4px;
+    padding: 6px;
+    background-color: #333;
+}
+msgbox button#msgok:hover {
+    cursor: pointer;
+    background-color: #444;
 }
