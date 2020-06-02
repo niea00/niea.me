@@ -53,8 +53,8 @@ $livetitle= "0";
         <tag>niea<span>Hax</span></tag>
         </a>
 
-        <taskbarcontainer>
-        </taskbarcontainer>
+        <ul id="taskbarcontainer">
+        </ul>
 
         <live <?php if($live){echo 'class="islive"';}?>>LIVE</live>
         <clock>00:00:00</clock>

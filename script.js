@@ -99,9 +99,9 @@ appsToLoad.forEach(element => {
             $('window#' + a.id)
             .animate({
                 'top' : '-16px',
-                'left' : $('taskbaritem#' + a.id).position().left,
-                'width' : $('taskbaritem#' + a.id).width(),
-                'height' : $('taskbaritem#' + a.id).height(),
+                'left' : $('li.taskbaritem#' + a.id).position().left,
+                'width' : $('li.taskbaritem#' + a.id).width(),
+                'height' : $('li.taskbaritem#' + a.id).height(),
                 'opacity' : '0'
             }, 200, () => {
                 $(this)
@@ -111,7 +111,7 @@ appsToLoad.forEach(element => {
                 })
             })
             setTimeout(() => {
-                $('taskbaritem').removeClass('focus');
+                $('li.taskbaritem').removeClass('focus');
                 $('window').removeClass('focus');
             }, 20);
         })
@@ -119,7 +119,7 @@ appsToLoad.forEach(element => {
         $('content window#' + a.id + " titlebar closebutton").click(() => {
             eval(a.id).onClose();
             $('window#' + a.id).hide();
-            $('taskbaritem#' + a.id).remove();
+            $('li.taskbaritem#' + a.id).remove();
         })
 
         $('content window#' + a.id + " titlebar name").css(
@@ -157,9 +157,14 @@ $('live').click(() => {
     }
 })
 
+$( "ul#taskbarcontainer" ).sortable({
+    revert: true,
+    axis: "x"
+});
+
 $('dwm').mousedown(() => {
     $('window').removeClass("focus");
-    $('taskbaritem').removeClass('focus');
+    $('li.taskbaritem').removeClass('focus');
 });
 
 startTime();
@@ -183,11 +188,11 @@ function checkTime(i) {
 
 function openWindow(id){
 
-        if($('taskbaritem#' + id).length == 0){
+        if($('li.taskbaritem#' + id).length == 0){
 
             eval(id).onOpen();
-            $('taskbarcontainer').append('<taskbaritem id="' + id + '"><img src="' + $('icon#' + id + ' img').attr('src') + '"><p id="name">' + eval(id).name + '</p></taskbaritem>')
-            $('taskbaritem#' + id).click(() => {
+            $('ul#taskbarcontainer').append('<li class="taskbaritem" id="' + id + '"><img src="' + $('icon#' + id + ' img').attr('src') + '"><p id="name">' + eval(id).name + '</p></li>')
+            $('li.taskbaritem#' + id).mousedown(() => {
                 openWindow(id);
             })
         }
@@ -257,8 +262,8 @@ $(document).ready(() => {
 
 function focusWindow(id){
     $('window').removeClass('focus')
-    $('taskbaritem').removeClass('focus');
-    $('taskbaritem#' + id).addClass('focus');
+    $('li.taskbaritem').removeClass('focus');
+    $('li.taskbaritem#' + id).addClass('focus');
     $('window#' + id)
     .addClass("focus")
     .css('opacity', '1')
